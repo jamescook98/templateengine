@@ -10,6 +10,8 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
+var employees = [];
+
 function main() {
 
 }
@@ -41,6 +43,13 @@ const employeeType = {
     name: "newEmployee",
     message: "What kind of employee are you adding?",
     choices: ["Manager", "Engineer", "Intern"],
+};
+
+const anotherEmployee = {
+    type: "rawlist",
+    name: "anotherEmployee",
+    message: "Want to add another employee?",
+    choices: ["Yes", "No"],
 };
 
 function selectEmployee() {
@@ -79,7 +88,6 @@ function newEmployee(selectedEmployeeType) {
                 }]);
             function additionalQuestions() {
                 if (selectedEmployeeType === "Manager") {
-                    console.log("MANAGER.....////");
                     inquirer.prompt([
                         {
                             type: "input",
@@ -87,7 +95,6 @@ function newEmployee(selectedEmployeeType) {
                             name: "officeNumber"
                         }])
                 } else if (selectedEmployeeType === "Engineer") {
-                    console.log("ENGINEER....////");
                     inquirer.prompt([
                         {
                             type: "input",
@@ -95,7 +102,6 @@ function newEmployee(selectedEmployeeType) {
                             name: "github"
                         }])
                 } else if (selectedEmployeeType === "Intern") {
-                    console.log("INTERN....////");
                     inquirer.prompt([
                         {
                             type: "input",
@@ -105,6 +111,17 @@ function newEmployee(selectedEmployeeType) {
                 }
             }
             additionalQuestions();
+            var generatedEmployee = [userInput.name, userInput.id, userInput.email]
+            employees.push([generatedEmployee]);
+            inquirer.prompt(anotherEmployee).then((answers) => {
+                if (answers.anotherEmployee === "Yes") {
+                    console.log("Adding another employee.");
+                    selectEmployee();
+                } else {
+                    console.log("no more employees");
+                }
+            }); 
+            //return writeToFile("test.html", );
             return writeToFile("test.html", `{ "name": "${userInput.name}", "id": "${userInput.id}", "email": "${userInput.email}" }`);
         } catch (err) {
             console.log(err);
@@ -112,6 +129,7 @@ function newEmployee(selectedEmployeeType) {
     }
     userInputs();
 }
+
 
 function writeToFile(fileName, data) {
     fs.writeFileSync(fileName, data);
