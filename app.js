@@ -120,27 +120,25 @@ function newEmployee(selectedEmployeeType) {
                 } else {
                     console.log("no more employees");
                     console.log(employees);
+                    outputTeamHTML(employees);
                 }
             });
         }
     }
-
     userInputs();
-    //return writeToFile("test.html", );
-  //  return writeToFile("test.html", `{ "name": "${userInput.name}", "id": "${userInput.id}", "email": "${userInput.email}" }`);
 }
 
-
-/*
-function newManager() {
-    inquirer.prompt(managerQuestions()).then((answers) => {
-        const newManager = new Manager(answers.newName, answers.newID, answers.newEmail, answers.newManagerOfficeNumber);
-        employees.push(newManager);
-        return newManager;
-    }).then(addMorePrompt);//ask user if they would like to add another employee
+const outputTeamHTML = async (employees) => {
+    try {
+        const employeeHTML = await render(employees);
+        fs.writeFile(outputPath, employeeHTML, (err) => {
+            if (err) {
+                throw err;
+            } else {
+                console.log("success");
+            }
+        } 
+        )}catch (error) {
+                throw error;
+        };
 };
-?*/
-
-function writeToFile(fileName, data) {
-    fs.writeFileSync(fileName, data);
-}
