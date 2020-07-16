@@ -47,20 +47,18 @@ function selectEmployee() {
     inquirer.prompt(employeeType).then((answers) => {
         if (answers.newEmployee === "Manager") {
             console.log("Adding a manager.");
-            newEmployee();
         } else if (answers.newEmployee === "Engineer") {
             console.log("Adding an engineer.");
-            newEmployee();
         } else {
             console.log("Adding an intern.");
-            newEmployee();
         }
+        newEmployee(answers.newEmployee);
     });
 };
 selectEmployee();
 
 
-function newEmployee() {
+function newEmployee(selectedEmployeeType) {
     async function userInputs() {
         try {
             const userInput = await inquirer.prompt([
@@ -78,8 +76,36 @@ function newEmployee() {
                     type: "input",
                     message: "Employee email address:",
                     name: "email"
-                }])
-                return writeToFile("test.JSON", `{ "name": "${userInput.name}", "id": "${userInput.id}", "email": "${userInput.email}" }`); 
+                }]);
+            function additionalQuestions() {
+                if (selectedEmployeeType === "Manager") {
+                    console.log("MANAGER.....////");
+                    inquirer.prompt([
+                        {
+                            type: "input",
+                            message: "Office number:",
+                            name: "officeNumber"
+                        }])
+                } else if (selectedEmployeeType === "Engineer") {
+                    console.log("ENGINEER....////");
+                    inquirer.prompt([
+                        {
+                            type: "input",
+                            message: "Github:",
+                            name: "github"
+                        }])
+                } else if (selectedEmployeeType === "Intern") {
+                    console.log("INTERN....////");
+                    inquirer.prompt([
+                        {
+                            type: "input",
+                            message: "Name of school or university:",
+                            name: "school"
+                        }])
+                }
+            }
+            additionalQuestions();
+            return writeToFile("test.html", `{ "name": "${userInput.name}", "id": "${userInput.id}", "email": "${userInput.email}" }`);
         } catch (err) {
             console.log(err);
         }
