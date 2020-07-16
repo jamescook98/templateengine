@@ -69,67 +69,77 @@ selectEmployee();
 
 function newEmployee(selectedEmployeeType) {
     async function userInputs() {
-        try {
-            const userInput = await inquirer.prompt([
+        const userInput = await inquirer.prompt([
+            {
+                type: "input", message: "Employee name:", name: "name"
+            },
+            {
+                type: "input", message: "Employee ID number:", name: "id"
+            },
+            {
+                type: "input", message: "Employee email address:", name: "email"
+            }]);
+
+        if (selectedEmployeeType === "Manager") {
+            const managerOffice = await inquirer.prompt([
+                {
+                    type: "input", message: "Office number:", name: "officeNumber"
+                }])
+            const newManager = new Manager(userInput.name, userInput.id, userInput.email, managerOffice.officeNumber);
+            employees.push(newManager);
+            anotherEmployeePrompt();
+        } else if (selectedEmployeeType === "Engineer") {
+            const engineerGithub = await inquirer.prompt([
                 {
                     type: "input",
-                    message: "Employee name:",
-                    name: "name"
-                },
+                    message: "Github:",
+                    name: "github"
+                }])
+            const newEngineer = new Engineer(userInput.name, userInput.id, userInput.email, engineerGithub.github);
+            employees.push(newEngineer);
+            anotherEmployeePrompt();
+        } else if (selectedEmployeeType === "Intern") {
+            const internSchool = await inquirer.prompt([
                 {
                     type: "input",
-                    message: "Employee ID number:",
-                    name: "id"
-                },
-                {
-                    type: "input",
-                    message: "Employee email address:",
-                    name: "email"
-                }]);
-            function additionalQuestions() {
-                if (selectedEmployeeType === "Manager") {
-                    inquirer.prompt([
-                        {
-                            type: "input",
-                            message: "Office number:",
-                            name: "officeNumber"
-                        }])
-                } else if (selectedEmployeeType === "Engineer") {
-                    inquirer.prompt([
-                        {
-                            type: "input",
-                            message: "Github:",
-                            name: "github"
-                        }])
-                } else if (selectedEmployeeType === "Intern") {
-                    inquirer.prompt([
-                        {
-                            type: "input",
-                            message: "Name of school or university:",
-                            name: "school"
-                        }])
-                }
-            }
-            additionalQuestions();
-            var generatedEmployee = [userInput.name, userInput.id, userInput.email]
-            employees.push([generatedEmployee]);
+                    message: "Name of school or university:",
+                    name: "school"
+                }])
+            const newIntern = new Intern(userInput.name, userInput.id, userInput.email, internSchool.school);
+            employees.push(newIntern);
+            anotherEmployeePrompt();
+        }
+        var generatedEmployee = [userInput.name, userInput.id, userInput.email];
+        employees.push([generatedEmployee]);
+        
+        function anotherEmployeePrompt() {
             inquirer.prompt(anotherEmployee).then((answers) => {
                 if (answers.anotherEmployee === "Yes") {
                     console.log("Adding another employee.");
                     selectEmployee();
                 } else {
                     console.log("no more employees");
+                    console.log(employees);
                 }
-            }); 
-            //return writeToFile("test.html", );
-            return writeToFile("test.html", `{ "name": "${userInput.name}", "id": "${userInput.id}", "email": "${userInput.email}" }`);
-        } catch (err) {
-            console.log(err);
+            });
         }
     }
+
     userInputs();
+    //return writeToFile("test.html", );
+  //  return writeToFile("test.html", `{ "name": "${userInput.name}", "id": "${userInput.id}", "email": "${userInput.email}" }`);
 }
 
+
+/*
+function newManager() {
+    inquirer.prompt(managerQuestions()).then((answers) => {
+        const newManager = new Manager(answers.newName, answers.newID, answers.newEmail, answers.newManagerOfficeNumber);
+        employees.push(newManager);
+        return newManager;
+    }).then(addMorePrompt);//ask user if they would like to add another employee
+};
+?*/
 
 function writeToFile(fileName, data) {
     fs.writeFileSync(fileName, data);
