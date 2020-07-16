@@ -79,9 +79,14 @@ function newEmployee() {
                     message: "Employee email address:",
                     name: "email"
                 }])
+                return writeToFile("test.JSON", `{ "name": "${userInput.name}", "id": "${userInput.id}", "email": "${userInput.email}" }`); 
         } catch (err) {
             console.log(err);
         }
     }
     userInputs();
+}
+
+function writeToFile(fileName, data) {
+    fs.writeFileSync(fileName, data);
 }
