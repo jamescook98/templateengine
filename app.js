@@ -12,9 +12,6 @@ const render = require("./lib/htmlRenderer");
 
 var employees = [];
 
-function main() {
-
-}
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 
@@ -109,8 +106,8 @@ function newEmployee(selectedEmployeeType) {
             employees.push(newIntern);
             anotherEmployeePrompt();
         }
-        var generatedEmployee = [userInput.name, userInput.id, userInput.email];
-        employees.push([generatedEmployee]);
+        //var generatedEmployee = [userInput.name, userInput.id, userInput.email];
+        //employees.push(generatedEmployee);
         
         function anotherEmployeePrompt() {
             inquirer.prompt(anotherEmployee).then((answers) => {
@@ -118,8 +115,6 @@ function newEmployee(selectedEmployeeType) {
                     console.log("Adding another employee.");
                     selectEmployee();
                 } else {
-                    console.log("no more employees");
-                    console.log(employees);
                     outputTeamHTML(employees);
                 }
             });
@@ -135,10 +130,14 @@ const outputTeamHTML = async (employees) => {
             if (err) {
                 throw err;
             } else {
-                console.log("success");
+                console.log("Success. See team.html");
             }
         } 
         )}catch (error) {
                 throw error;
         };
 };
+
+
+// after you answer "do you want to create another"
+// create "view employees, edit employees, quit"
