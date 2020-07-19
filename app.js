@@ -92,14 +92,14 @@ function newEmployee(selectedEmployeeType) {
         }
         
         //asks if user wants to create another employee
-        //if yes, does that; if not, sends the array of employees to outputTeamHTML
+        //if yes, does that; if not, sends the array of employees to createEmployeesHTML
         function anotherEmployeePrompt() {
             inquirer.prompt(anotherEmployee).then((answers) => {
                 if (answers.anotherEmployee === "Yes") {
                     console.log("Adding another employee.");
                     selectEmployee();
                 } else {
-                    outputTeamHTML(employees);
+                    createEmployeesHTML(employees);
                 }
             });
         }
@@ -108,7 +108,7 @@ function newEmployee(selectedEmployeeType) {
 }
 
 //renders employee data as HTML
-const outputTeamHTML = async (employees) => {
+const createEmployeesHTML = async (employees) => {
     try {
         const employeeHTML = await render(employees);
         fs.writeFile(outputPath, employeeHTML, (err) => {
@@ -118,7 +118,7 @@ const outputTeamHTML = async (employees) => {
                 console.log("Success. See team.html");
             }
         } 
-        )}catch (error) {
+        )} catch (error) {
                 throw error;
         };
 };
