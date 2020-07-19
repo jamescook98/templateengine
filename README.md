@@ -26,5 +26,5 @@ No tests required
 # Questions
 No questions please
 # Contact
-![github profile picture](https://avatars.githubusercontent.com/jamescook98?s=100)(mailto:cookjamesarthur@gmail.com)
+[![github profile picture](https://avatars.githubusercontent.com/jamescook98?s=100)](mailto:cookjamesarthur@gmail.com)
     
