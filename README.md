@@ -1,7 +1,7 @@
 # Employee Summary Engine
 ![gif demonstrating app functionality](assets/gif/functionality.gif)
 # Description
-Recieves and organizes employee information and creates a clean, structured HTML document
+Recieves and organizes employee information via CLI and renders that data into clean, structured HTML
 # Table of Contents
 * [Installation](#Installation)
 * [Usage](#Usage)
