@@ -1,5 +1,3 @@
-
-![quality badge](https://img.shields.io/badge/quality-4.125-brightgreen)
 # Employee Summary Engine
 ![gif demonstrating app functionality](assets/gif/functionality.gif)
 # Description
